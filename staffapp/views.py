@@ -10,6 +10,9 @@ def home(request):
     jobs = Job.objects.filter().order_by('created_date')
     return render(request, 'joblist.html', {'jobs': jobs})
 
+def profilePage(request):
+    user = request.user
+    return render(request, 'profile.html', {})
 
 def joblistPage(request):
     jobs = Job.objects.filter().order_by('created_date')
@@ -28,8 +31,7 @@ def jobNewPost(request):
         newjob.description = request.POST['description']
         newjob.save()
 
-        jobs = Job.objects.filter().order_by('created_date')
-        return render(request, 'joblist.html', {'jobs': jobs})
+        return HttpResponseRedirect('/job/list')
                     
         
 def registerPage(request):
@@ -43,7 +45,7 @@ def registerPage(request):
             User.objects.create_user(username, email, password)
             user = authenticate(username = username, password = password)
             login(request, user)     
-            return HttpResponseRedirect('/');
+            return HttpResponseRedirect('/profile')
         else:
             return render(request, 'registeration/register.html', {});
 

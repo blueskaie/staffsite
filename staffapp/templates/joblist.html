@@ -10,16 +10,16 @@
             <div class="row">
                 {% for job in jobs %}
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <div class="row job-block">
-                        <div class="col-lg-3">
-                            {{job.created_date}}
+                    <div class="row job-block" style="padding: 13px">
+                        <div class="col-lg-3" style="padding-top: 30px">
+                            <p style="font-size:48px; font-weight: bold">{{ job.created_date.day }}</p>
+                            <p style="font-size:32px">{{ job.created_date|date:"M" }}</p>
                         </div>
                         <div class="col-lg-8">
-                            <h1>{{job.title}}</h1>
-                            <p>
-                                {{job.description}}
-                            </p>
-                            <button>ACCEPT</button>
+                            <p style="font-size:32px">{{job.title}}</p>
+                            <p>{{job.description}}</p>
+                            <p><i class="fa fa-map-marker" aria-hidden="true"></i>{{job.location}}<p>
+                            <button onclick="jobrequestfn({{job.id}})" style="background-color: rgb(138, 126,126);color: white; border-radius: 4px; border: none">ACCEPT</button>
                         </div>
                     </div>
                 </div>
@@ -27,6 +27,15 @@
             </div>
         </div>
     </div>
-
-    {% include 'layouts/footer.html' %}    
+    <script>
+    function jobrequestfn(jobid){
+        alert("Send your request of JOB : "+jobid+"  to Server");
+    };
+    // $(document).ready(function(){
+    //     // $("#jobacceptbtn").click(function(){
+    //     //     alert("The paragraph was clicked.");
+    //     // });
+    // });
+    </script>
+    {% include 'layouts/footer.html' %}
 {% endblock %}

@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^accounts/logout/$', auth_views.logout, name="logout"),
 
     url(r'^$', views.home, name='index'),
+    url(r'profile', views.profilePage, name='profile'),
     url(r'job/list', views.joblistPage, name='joblist'),
     url(r'job/newform', views.jobpostPage, name='jobpost'),
     url(r'job/new', views.jobNewPost, name='newjobpost'),
