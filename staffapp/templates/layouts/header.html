@@ -1,0 +1,39 @@
+{% load staticfiles %}
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <a href="index.html"><img src="{% static 'img/blacklogo.jpg' %}" style="width: 100px; height: 100px;" alt="Hair Salon Website Templates Free Download"></a>
+            </div>
+            <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12">
+                <div class="navigation">
+                    <div id="navigation">
+                        <ul>
+                            <li class="active"><a href="#" title="Home">Home</a></li>
+                            <li><a href="/profile" title="My Profile">My Profile</a> </li>
+                            <li><a href="/job/list" title="Job List">Events</a> </li>
+                            {% if user.is_superuser %}
+                            <li class="navbtn"><a href="/job/newform" style="color: white;"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;POST JOB</a> </li>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <li class="navbtn"><a href="/accounts/logout" style="color: white;">LOG OUT</a> </li>
+                            {% else %}
+                            <li class="navbtn"><a href="/accounts/login" style="color: white;">LOG IN</a> </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h1 class="hero-title" style="text-align: center">WILD FORK</h1>
+            </div>
+        </div>
+    </div>
+</div>

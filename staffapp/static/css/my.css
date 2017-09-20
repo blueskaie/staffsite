@@ -1,0 +1,10 @@
+.navigation li.navbtn{
+    background-color: rgb(138, 126,126);
+    color: white;
+    border-radius: 4px;
+}
+
+.job-block{
+    border: 2px solid rgb(71,71,71);
+    margin: 10px;
+}

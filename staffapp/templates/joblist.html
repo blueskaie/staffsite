@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+    {% include 'layouts/header.html' %}
+    
+    <div class="space-medium bg-default">   
+        <div class="container">
+            <div class="row">
+                {% for job in jobs %}
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="row job-block">
+                        <div class="col-lg-3">
+                            {{job.created_date}}
+                        </div>
+                        <div class="col-lg-8">
+                            <h1>{{job.title}}</h1>
+                            <p>
+                                {{job.description}}
+                            </p>
+                            <button>ACCEPT</button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}                                                                                                          
+            </div>
+        </div>
+    </div>
+
+    {% include 'layouts/footer.html' %}    
+{% endblock %}
