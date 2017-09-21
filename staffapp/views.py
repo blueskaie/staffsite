@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Job
+from .models import Job, Profile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
@@ -11,8 +11,30 @@ def home(request):
     return render(request, 'joblist.html', {'jobs': jobs})
 
 def profilePage(request):
-    user = request.user
-    return render(request, 'profile.html', {})
+    profile = Profile.objects.filter(user=request.user)
+    if not profile:
+        profile = Profile(user=request.user)
+        profile.age = 0
+        profile.save()
+    else:
+        profile = profile[0]
+
+    return render(request, 'profile.html', {'profile':profile})
+
+@login_required
+def profileEdit(request):
+    if request.method == "POST":
+        profile = Profile.objects.filter(user=request.user)[0]
+        # profile = Profile(user=request.user)
+        profile.age = int(request.POST['age'])
+        #newprofile.role = request.POST['role']
+        profile.contact = request.POST['contact']
+        profile.location = request.POST['location']
+        profile.save()
+        return HttpResponseRedirect('/')
+    else:
+        return HttpResponseRedirect('/job/list')
+
 
 def joblistPage(request):
     jobs = Job.objects.filter().order_by('created_date')
@@ -47,6 +69,6 @@ def registerPage(request):
             login(request, user)     
             return HttpResponseRedirect('/profile')
         else:
-            return render(request, 'registeration/register.html', {});
+            return render(request, 'registeration/register.html', {})
 
         

@@ -27,3 +27,21 @@ class Job(models.Model):
 
     def __str__(self):
         return self.title
+
+class Profile(models.Model):
+    user = models.ForeignKey('auth.User')
+    age = models.IntegerField()
+    role = models.CharField(max_length=100)
+    location = models.CharField(max_length=200)
+    contact = models.CharField(max_length=100)
+    created_date = models.DateTimeField(
+            default=timezone.now)
+    published_date = models.DateTimeField(
+            blank=True, null=True)
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.user.username

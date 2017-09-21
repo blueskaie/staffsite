@@ -9,6 +9,7 @@ urlpatterns = [
 
     url(r'^$', views.home, name='index'),
     url(r'profile', views.profilePage, name='profile'),
+    url(r'prof/new', views.profileEdit, name='profileedit'),
     url(r'job/list', views.joblistPage, name='joblist'),
     url(r'job/newform', views.jobpostPage, name='jobpost'),
     url(r'job/new', views.jobNewPost, name='newjobpost'),

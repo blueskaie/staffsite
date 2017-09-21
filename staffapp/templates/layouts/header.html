@@ -10,7 +10,9 @@
                     <div id="navigation">
                         <ul>
                             <li class="active"><a href="#" title="Home">Home</a></li>
+                            {% if user.is_authenticated %}
                             <li><a href="/profile" title="My Profile">My Profile</a> </li>
+                            {% endif %}
                             <li><a href="/job/list" title="Job List">Events</a> </li>
                             {% if user.is_superuser %}
                             <li class="navbtn"><a href="/job/newform" style="color: white;"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;POST JOB</a> </li>
