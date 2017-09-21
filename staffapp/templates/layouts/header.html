@@ -2,10 +2,10 @@
 <div class="header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                 <a href="index.html"><img src="{% static 'img/blacklogo.jpg' %}" style="width: 100px; height: 100px;" alt="Hair Salon Website Templates Free Download"></a>
             </div>
-            <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12">
+            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                 <div class="navigation">
                     <div id="navigation">
                         <ul>
@@ -14,6 +14,7 @@
                             <li><a href="/profile" title="My Profile">My Profile</a> </li>
                             {% endif %}
                             <li><a href="/job/list" title="Job List">Events</a> </li>
+                            <li><a href="/about" title="About">About</a></li>
                             {% if user.is_superuser %}
                             <li class="navbtn"><a href="/job/newform" style="color: white;"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;POST JOB</a> </li>
                             {% endif %}

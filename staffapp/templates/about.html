@@ -1,0 +1,23 @@
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+    {% include 'layouts/header.html' %}
+    <div class="space-medium bg-default">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <p style="font-size:32px; font-weight: bold; line-height: 52px">
+                        Established in 2005, The Wild Fork is an Event Bar & Kitchen based in rural West Berkshire providing quintessentially British country food and event planning for weddings, parties and corporate events across the home counties and beyond.
+                        In the box where you have the picture of people shaking hands
+                    </p>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <img src="{% static 'img/handshake.jpg' %}" style="width:100%; height:100%"/>
+                </div>                
+            </div>
+        </div>
+    </div>
+    {% include 'layouts/footer.html' %}    
+{% endblock %}

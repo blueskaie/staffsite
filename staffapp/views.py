@@ -12,6 +12,10 @@ def home(request):
     return render(request, 'joblist.html', {'jobs': jobs})
 
 @login_required
+def about(request):
+    return render(request, 'about.html', {})
+
+@login_required
 def profilePage(request):
     profile = Profile.objects.filter(user=request.user)
     if not profile:
