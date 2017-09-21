@@ -6,10 +6,12 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required
 def home(request):
     jobs = Job.objects.filter().order_by('created_date')
     return render(request, 'joblist.html', {'jobs': jobs})
 
+@login_required
 def profilePage(request):
     profile = Profile.objects.filter(user=request.user)
     if not profile:
@@ -35,7 +37,7 @@ def profileEdit(request):
     else:
         return HttpResponseRedirect('/job/list')
 
-
+@login_required
 def joblistPage(request):
     jobs = Job.objects.filter().order_by('created_date')
     return render(request, 'joblist.html', {'jobs': jobs})
