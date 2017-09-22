@@ -30,6 +30,14 @@
     <script>
     function jobrequestfn(jobid){
         alert("Send your request of JOB : "+jobid+"  to Server");
+        $.post('job/request', 
+        {'job_id': jobid,
+        'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
+        function(data){
+            // alert(data.result);
+            if (data.result == false) alert('Failure: Your request is failed');
+            else alert('Success: Your  request is send to manager successfully');
+        })
     };
     // $(document).ready(function(){
     //     // $("#jobacceptbtn").click(function(){

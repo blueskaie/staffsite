@@ -1,0 +1,76 @@
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+    {% include 'layouts/header.html' %}
+    <div class="space-small bg-default">
+        <div class="container">
+            <h1>Requests we will process</h1>
+            <table>
+                <thead>
+                    <th> Request id </th>
+                    <th> Job Title </th>
+                    <th> Job Content </th>
+                    <th> Staff Member </th>
+                    <th> Actions </th>
+                </thead>            
+                <tbody>
+                    {% for request in will_requests %}
+                    <tr>
+                        <td>{{request.id}}</td>
+                        <td>{{request.job.title}}</td>
+                        <td>{{request.job.description}}</td>
+                        <td>{{request.user.username}}</td>
+                        <td><button onclick="processfn(true, {{request.id}})">Accept</button><button onclick="processfn(false, {{request.id}})">Decline</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="space-small bg-default">
+        <div class="container">
+            <h1>Requests we did process</h1>
+            <table>
+                <thead>
+                    <th> Request id </th>
+                    <th> Job Title </th>
+                    <th> Job Content </th>
+                    <th> Staff Member </th>
+                    <th> Status </th>
+                </thead>            
+                <tbody>
+                    {% for request in did_requests %}
+                    <tr>
+                        <td>{{request.id}}</td>
+                        <td>{{request.job.title}}</td>
+                        <td>{{request.job.description}}</td>
+                        <td>{{request.user.username}}</td>
+                        <td>{{request.status}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+    function processfn(mode, requestid){
+        alert("Request"+requestid+"mode"+mode);
+        $.post('job/reqprocess', 
+        {'request_id': requestid,
+        'mode': mode,
+        'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
+        function(data){
+            // alert(data.result);
+            if (data.result == false) {
+                alert('Failure: Your Action is failed');
+            } else {
+                alert('Success: Your  action is processed');
+                window.location = '/job/reqprocess'
+            }
+        })
+    };
+    </script>    
+    {% include 'layouts/footer.html' %}    
+{% endblock %}

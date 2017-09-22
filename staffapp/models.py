@@ -45,3 +45,27 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+REQUEST_STATUS_CHOICES= (
+    ('WT', 'Wait'),
+    ('AC', 'Accept'),
+    ('DE', 'Decline'),
+)
+class Requestjob(models.Model):
+    user = models.ForeignKey('auth.User')
+    job = models.ForeignKey('Job')
+    status = models.CharField(max_length=9, choices=REQUEST_STATUS_CHOICES, default="WT")
+    processed = models.BooleanField(default =0)
+    
+    created_date = models.DateTimeField(
+            default=timezone.now)
+    published_date = models.DateTimeField(
+            blank=True, null=True)
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return 'request '+self.job.title+' of '+self.user.username

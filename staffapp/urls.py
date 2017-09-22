@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'job/list', views.joblistPage, name='joblist'),
     url(r'job/newform', views.jobpostPage, name='jobpost'),
     url(r'job/new', views.jobNewPost, name='newjobpost'),
+    url(r'job/request', views.requestJob, name='requestjob'),
+    url(r'job/reqprocess', views.requestJobProcess, name='requestjobprocess'),
     url(r'about', views.about, name='about')
 ]

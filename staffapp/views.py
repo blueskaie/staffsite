@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Job, Profile
+from .models import Job, Profile, Requestjob
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.db.models import Q
 # Create your views here.
 @login_required
 def home(request):
@@ -61,7 +63,7 @@ def jobNewPost(request):
 
         return HttpResponseRedirect('/job/list')
                     
-        
+      
 def registerPage(request):
     if request.method == 'GET':
         return render(request, 'registeration/register.html', {})
@@ -77,4 +79,35 @@ def registerPage(request):
         else:
             return render(request, 'registeration/register.html', {})
 
-        
+@login_required
+def requestJob(request):
+    if request.method == 'POST':
+        jobid = int(request.POST['job_id'])
+        job = Job.objects.filter(id=jobid)
+        if (not job):
+            return JsonResponse({'result': false})
+        newReqjob = Requestjob(user=request.user, job=job[0])
+        newReqjob.save()
+        return JsonResponse({'result': newReqjob.id})
+    else:
+        requestjobs = Requestjob.objects.filter(user=request.user)
+        return render(request, 'requestjoblist.html', {'requestjobs': requestjobs})
+
+@login_required
+def requestJobProcess(request):
+    if request.method == 'POST':
+        request_id = int(request.POST['request_id'])
+        mode = request.POST['mode']
+        requestjob = Requestjob.objects.filter(id=request_id)[0]
+        if mode == 'true':
+            requestjob.status = 'AC'
+        else:
+            requestjob.status = 'DE'
+        requestjob.save()
+        return JsonResponse({'result': requestjob.id})        
+    else:
+        will_requests = Requestjob.objects.filter(status='WT')
+        did_requests = Requestjob.objects.filter(~Q(status='WT'))
+        return render(request, 'requestprocess.html', {'will_requests': will_requests, 'did_requests': did_requests})
+
+

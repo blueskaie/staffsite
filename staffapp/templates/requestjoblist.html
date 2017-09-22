@@ -1,0 +1,30 @@
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+    {% include 'layouts/header.html' %}
+    <div class="space-medium bg-default">
+        <div class="container">
+            <table>
+                <thead>
+                    <th> Job id </th>
+                    <th> Job Title </th>
+                    <th> Job Content </th>
+                    <th> Status </th>
+                </thead>            
+                <tbody>
+                    {% for job in requestjobs %}
+                    <tr>
+                        <td>{{job.job.id}}</td>
+                        <td>{{job.job.title}}</td>
+                        <td>{{job.job.description}}</td>
+                        <td>{{job.status}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% include 'layouts/footer.html' %}    
+{% endblock %}
