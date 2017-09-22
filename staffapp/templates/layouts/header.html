@@ -10,13 +10,15 @@
                     <div id="navigation">
                         <ul>
                             <!-- <li class="active"><a href="#" title="Home">Home</a></li> -->
+                            
+                            {% if user.is_authenticated and not user.is_superuser %}
                             <li><a href="/job/list" title="Job List">Home</a> </li>
-                            {% if user.is_authenticated %}
                             <li><a href="/profile" title="My Profile">My Profile</a> </li>
                             <li><a href="/job/request" title="My Profile">My Jobs</a> </li>                            
                             {% endif %}
-                            <li><a href="/about" title="About">AboutUS</a></li>
+                            <!-- <li><a href="/about" title="About">AboutUS</a></li> -->
                             {% if user.is_superuser %}
+                            <li><a href="/job/adminlist" title="Job List">Jobs</a> </li>
                             <li><a href="/job/reqprocess" title="ReqProcess">Events</a> </li>  
                             <li class="navbtn"><a href="/job/newform" style="color: white;"><i class="fa fa-pencil" aria-hidden="true"></i> &nbsp;POST JOB</a> </li>
                             {% endif %}

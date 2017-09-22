@@ -15,7 +15,9 @@ class Job(models.Model):
     companyName = models.CharField(max_length=100)
     website = models.CharField(max_length=100)
     tagline = models.CharField(max_length=200)
-
+    start_time = models.TimeField(default=timezone.now)
+    end_time = models.TimeField(default=timezone.now)
+   
     created_date = models.DateTimeField(
             default=timezone.now)
     published_date = models.DateTimeField(

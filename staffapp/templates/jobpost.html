@@ -13,43 +13,25 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="well-block">
                         <div class="form-group log-status">
-                            <p>Your Email</p>
-                            <input type="email" name="email" class="form-control" placeholder="mail@example.com" id="Email">
-                        </div>
-                        <div class="form-group log-status">
                             <p>Job Title</p>
-                            <input type="text" name="title" class="form-control" placeholder="Please input job title" id="JobTitle">
+                            <input type="text" name="title" class="form-control" placeholder="Please input job title" id="JobTitle" value="{{job.title}}">
                         </div>
                         <div class="form-group log-status">
                             <p>Location(optional)</p>
-                            <input type="text" name="location" class="form-control" placeholder="e.g. London" id="Location">
-                        </div>
-                        <div class="form-group log-status">
-                            <p>Category</p>
-                            <input type="text" name="category" class="form-control" placeholder="All Categories" id="Category">
-                        </div>
-                        <div class="form-group log-status">
-                            <p>Job Tags(optional)</p>
-                            <input type="text" name="tags" class="form-control" placeholder="e.g.PHP, Social Media, Management" id="JobTags">
+                            <input type="text" name="location" class="form-control" placeholder="e.g. London" id="Location" value="{{job.location}}">
                         </div>
                         <div class="form-group log-status">
                             <p>Description</p>
-                            <textarea name="description" class="form-control" id="Description" style="height:200px;"></textarea>
-                        </div>
-                    </div>
-                    <div class="well-block">
-                        <div class="form-group log-status">
-                            <p>Company Name</p>
-                            <input type="text" name="companyname" class="form-control" placeholder="Enter the name of the company" id="CompanyName">
+                            <textarea name="description" class="form-control" id="Description" style="height:200px;" value="{{job.description}}"></textarea>
                         </div>
                         <div class="form-group log-status">
-                            <p>Website(optional)</p>
-                            <input type="text" name="website" class="form-control" placeholder="http://" id="Website">
+                            <p>StartTime</p>
+                            <input name="start_time" class="form-control" type="time" value="{{job.start_time}}">
                         </div>
                         <div class="form-group log-status">
-                            <p>Tagline(optional)</p>
-                            <input type="text" name="tagline" class="form-control" placeholder="Briefly describe your company" id="Tagline">
-                        </div>
+                            <p>EndTime</p>
+                            <input name="end_time" class="form-control" type="time" value="{{job.end_time}}">
+                        </div>                                                
                     </div>
                     <div class="well-block">
                         <button id="jobsubmit" type="submit" style="width: 40%; height: 50px; background-color: rgb(138, 126,126); color: white; border-radius: 4px; border:none; margin: 0 30%">Submit</button>

@@ -1,0 +1,68 @@
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+    {% include 'layouts/header.html' %}
+    <div class="space-small bg-default">
+        <div class="container">
+            <h1>Job List</h1>
+            <table>
+                <thead>
+                    <th> Job Id </th>
+                    <th> Job Title </th>
+                    <th> Job Content </th>
+                    <th> Actions </th>
+                </thead>            
+                <tbody>
+                    {% for job in jobs %}
+                    <tr>
+                        <td>{{job.id}}</td>
+                        <td>{{job.title}}</td>
+                        <td>{{job.description}}</td>
+                        <td><button onclick="editfn({{job.id}})">Edit</button><button onclick="deletefn({{job.id}})">Delete</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+    function editfn(jobid){
+        //alert("Request"+jobid+"mode"+mode);
+        var url = '/job/newform?job_id='+jobid
+        window.location = url;
+        // $.post('job/reqprocess', 
+        // {'request_id': requestid,
+        // 'mode': mode,
+        // 'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
+        // function(data){
+        //     // alert(data.result);
+        //     if (data.result == false) {
+        //         alert('Failure: Your Action is failed');
+        //     } else {
+        //         alert('Success: Your  action is processed');
+        //         window.location = '/job/adminlist'
+        //     }
+        // })
+    };
+
+    function deletefn(jobid){
+        alert("Job"+jobid+"will be delete");
+        $.post('/job/delete', 
+        {'job_id': jobid,
+        'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
+        function(data){
+            // alert(data.result);
+            if (data.result == false) {
+                alert('Failure: Your Action is failed');
+            } else {
+                alert('Success: Your  action is processed');
+                window.location = '/job/adminlist'
+            }
+        })
+    };
+    </script>    
+    {% include 'layouts/footer.html' %}    
+{% endblock %}

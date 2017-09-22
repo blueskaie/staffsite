@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.db.models import Q
+from django.core.mail import send_mail
 # Create your views here.
 @login_required
 def home(request):
@@ -56,14 +57,27 @@ def jobpostPage(request):
 def jobNewPost(request):
     if request.method == "POST":
         newjob = Job(writer=request.user)
-        newjob.email = request.POST['email']
         newjob.title = request.POST['title']
+        newjob.location = request.POST['location']
         newjob.description = request.POST['description']
+        newjob.start_time = request.POST['start_time']
+        newjob.end_time = request.POST['end_time']
         newjob.save()
 
         return HttpResponseRedirect('/job/list')
-                    
-      
+    else:
+        jobid = int(request.GET['job_id'])
+        job = Job.objects.filter(id=jobid)[0]
+        return render(request, 'jobpost.html', {'job': job})
+
+@login_required                   
+def jobDeletePost(request):
+    if request.method == "POST":
+        jobid = request.POST['job_id']
+        job = Job.objects.get(id=jobid)
+        job.delete()
+        return JsonResponse({'result': 'true'})
+
 def registerPage(request):
     if request.method == 'GET':
         return render(request, 'registeration/register.html', {})
@@ -103,6 +117,16 @@ def requestJobProcess(request):
             requestjob.status = 'AC'
         else:
             requestjob.status = 'DE'
+        gmail_user = 'sabrinallbani83@gmail.com'
+        server = smtplib.SMTP_SSL('smtp.googlemail.com', 465)
+        server.login(gmail_user, 'victory1983')
+        server.sendmail(gmail_user, gmail_user, 'thanks')
+        # send_mail(
+        #     'Subject here',
+        #     'Here is the message.',
+        #     'sabrinallbani83@gmail.com',
+        #     ['sabrinallbani83@gmail.com']
+        # )
         requestjob.save()
         return JsonResponse({'result': requestjob.id})        
     else:
@@ -111,3 +135,6 @@ def requestJobProcess(request):
         return render(request, 'requestprocess.html', {'will_requests': will_requests, 'did_requests': did_requests})
 
 
+def adminJobList(request):
+    jobs = Job.objects.filter().order_by('created_date')
+    return render(request, 'adminjoblist.html', {'jobs': jobs})

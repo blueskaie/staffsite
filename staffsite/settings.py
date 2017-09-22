@@ -25,9 +25,14 @@ SECRET_KEY = '(3lm3rie5r8z7eo@*xw!o#50pe_qnnc$!#uk&nwib5l6s3&uex'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "zhuliying.pythonanywhere.com"]
 
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'sabrinallbani83@gmail.com'
+EMAIL_HOST_PASSWORD = 'victory1983'
 # Application definition
 
 INSTALLED_APPS = [
