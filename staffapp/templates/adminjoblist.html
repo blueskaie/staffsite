@@ -12,6 +12,7 @@
                     <th> Job Id </th>
                     <th> Job Title </th>
                     <th> Job Content </th>
+                    <th> Job Time/hour </th>
                     <th> Actions </th>
                 </thead>            
                 <tbody>
@@ -20,6 +21,7 @@
                         <td>{{job.id}}</td>
                         <td>{{job.title}}</td>
                         <td>{{job.description}}</td>
+                        <td>{{job.start_time}}-{{job.end_time}}</td>
                         <td><button onclick="editfn({{job.id}})">Edit</button><button onclick="deletefn({{job.id}})">Delete</button></td>
                     </tr>
                     {% endfor %}

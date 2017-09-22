@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.db.models import Q
 from django.core.mail import send_mail
+import smtplib
 # Create your views here.
 @login_required
 def home(request):
@@ -117,10 +118,10 @@ def requestJobProcess(request):
             requestjob.status = 'AC'
         else:
             requestjob.status = 'DE'
-        gmail_user = 'sabrinallbani83@gmail.com'
-        server = smtplib.SMTP_SSL('smtp.googlemail.com', 465)
-        server.login(gmail_user, 'victory1983')
-        server.sendmail(gmail_user, gmail_user, 'thanks')
+        # gmail_user = 'sabrinallbani83@gmail.com'
+        # server = smtplib.SMTP_SSL('smtp.googlemail.com', 465)
+        # server.login(gmail_user, 'victory1983')
+        # server.sendmail(gmail_user, gmail_user, 'thanks')
         # send_mail(
         #     'Subject here',
         #     'Here is the message.',
