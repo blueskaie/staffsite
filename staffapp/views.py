@@ -37,17 +37,20 @@ def profilePage(request):
 @login_required
 def profileEdit(request):
     if request.method == "POST":
-        myfile = request.FILES['photo']
-        fs = FileSystemStorage()
-        filename = fs.save(myfile.name,myfile)
-        uploaded_file_url = fs.url(filename)
+        uploaded_file_url = ''
+        if 'photo' in request.FILES:
+            myfile = request.FILES['photo']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name,myfile)
+            uploaded_file_url = fs.url(filename)
         profile = Profile.objects.filter(user=request.user)[0]
         # profile = Profile(user=request.user)
         profile.age = int(request.POST['age'])
         #newprofile.role = request.POST['role']
         profile.contact = request.POST['contact']
         profile.location = request.POST['location']
-        profile.path = uploaded_file_url
+        if uploaded_file_url != '':
+            profile.path = uploaded_file_url
         profile.save()
         return render(request, 'profile.html', {'profile': profile})
     else:
