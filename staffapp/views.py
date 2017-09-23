@@ -9,6 +9,9 @@ from django.http import JsonResponse
 from django.db.models import Q
 from django.core.mail import send_mail
 import smtplib
+
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 @login_required
 def home(request):
@@ -34,14 +37,19 @@ def profilePage(request):
 @login_required
 def profileEdit(request):
     if request.method == "POST":
+        myfile = request.FILES['photo']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name,myfile)
+        uploaded_file_url = fs.url(filename)
         profile = Profile.objects.filter(user=request.user)[0]
         # profile = Profile(user=request.user)
         profile.age = int(request.POST['age'])
         #newprofile.role = request.POST['role']
         profile.contact = request.POST['contact']
         profile.location = request.POST['location']
+        profile.path = uploaded_file_url
         profile.save()
-        return HttpResponseRedirect('/')
+        return render(request, 'profile.html', {'profile': profile})
     else:
         return HttpResponseRedirect('/job/list')
 
@@ -52,24 +60,37 @@ def joblistPage(request):
 
 @login_required
 def jobpostPage(request):
+    if 'job_id' in request.GET:
+        jobid = int(request.GET['job_id'])
+        job = Job.objects.filter(id=jobid)[0]
+        return render(request, 'jobpost.html', {'job': job})
     return render(request, 'jobpost.html', {})
 
 @login_required
 def jobNewPost(request):
     if request.method == "POST":
-        newjob = Job(writer=request.user)
-        newjob.title = request.POST['title']
-        newjob.location = request.POST['location']
-        newjob.description = request.POST['description']
-        newjob.start_time = request.POST['start_time']
-        newjob.end_time = request.POST['end_time']
-        newjob.save()
-
+        if request.POST['jobid']:
+            jobid = int(request.POST['jobid'])
+            newjob = Job.objects.filter(id=jobid)[0]
+            newjob.title = request.POST['title']
+            newjob.location = request.POST['location']
+            newjob.description = request.POST['description']
+            if request.POST['start_time']:
+                newjob.start_time = request.POST['start_time']
+            if request.POST['end_time']:
+                newjob.end_time = request.POST['end_time']
+            newjob.save()
+        else: 
+            newjob = Job(writer=request.user)
+            newjob.title = request.POST['title']
+            newjob.location = request.POST['location']
+            newjob.description = request.POST['description']
+            if request.POST['start_time']:
+                newjob.start_time = request.POST['start_time']
+            if request.POST['end_time']:
+                newjob.end_time = request.POST['end_time']
+            newjob.save()
         return HttpResponseRedirect('/job/list')
-    else:
-        jobid = int(request.GET['job_id'])
-        job = Job.objects.filter(id=jobid)[0]
-        return render(request, 'jobpost.html', {'job': job})
 
 @login_required                   
 def jobDeletePost(request):

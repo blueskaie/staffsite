@@ -4,6 +4,36 @@
 
 {% block content %}
     {% include 'layouts/header.html' %}
+    <style scoped>
+
+        .button-success,
+        .button-error,
+        .button-warning,
+        .button-secondary {
+            color: white;
+            border-radius: 4px;
+            border:none;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .button-success {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+
+        .button-error {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
+
+        .button-warning {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+
+        .button-secondary {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }
+
+    </style>
     <div class="space-small bg-default">
         <div class="container">
             <h1>Staff requesting jobs</h1>
@@ -22,7 +52,7 @@
                         <td>{{request.job.title}}</td>
                         <td>{{request.job.description}}</td>
                         <td>{{request.user.username}}</td>
-                        <td><button onclick="processfn(true, {{request.id}})">Accept</button><button onclick="processfn(false, {{request.id}})">Decline</button></td>
+                        <td><button class="button-secondary" onclick="processfn(true, {{request.id}})">Accept</button><button class="button-error" onclick="processfn(false, {{request.id}})">Decline</button></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -47,7 +77,16 @@
                         <td>{{request.job.title}}</td>
                         <td>{{request.job.description}}</td>
                         <td>{{request.user.username}}</td>
-                        <td>{{request.status}}</td>
+                        <td>
+                            {% if request.status == 'AC' %}
+                            <p class="button-secondary">Accept</p>
+                            {% elif request.status == 'DE' %}
+                            <p class="button-error">Decline</p>
+                            {% else %}
+                            <p class="button-warning">Waiting</p>
+                            {% endif %}
+                        </td>
+
                     </tr>
                     {% endfor %}
                 </tbody>

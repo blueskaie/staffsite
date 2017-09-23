@@ -4,22 +4,60 @@
 
 {% block content %}
     {% include 'layouts/header.html' %}
+    <style scoped>
+
+        .button-success,
+        .button-error,
+        .button-warning,
+        .button-secondary {
+            color: white;
+            border-radius: 4px;
+            border:none;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .button-success {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+
+        .button-error {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
+
+        .button-warning {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+
+        .button-secondary {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }
+
+    </style>
     <div class="space-medium bg-default">
         <div class="container">
             <table>
                 <thead>
-                    <th> Job id </th>
+                    <th> Request id </th>
                     <th> Job Title </th>
                     <th> Job Content </th>
                     <th> Status </th>
                 </thead>            
                 <tbody>
-                    {% for job in requestjobs %}
+                    {% for request in requestjobs %}
                     <tr>
-                        <td>{{job.job.id}}</td>
-                        <td>{{job.job.title}}</td>
-                        <td>{{job.job.description}}</td>
-                        <td>{{job.status}}</td>
+                        <td>{{request.job.id}}</td>
+                        <td>{{request.job.title}}</td>
+                        <td>{{request.job.description}}</td>
+                        <td>
+                            {% if request.status == 'AC' %}
+                            <p class="button-secondary">Accept</p>
+                            {% elif request.status == 'DE' %}
+                            <p class="button-error">Decline</p>
+                            {% else %}
+                            <p class="button-warning">Waiting</p>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

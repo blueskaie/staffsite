@@ -14,6 +14,7 @@
                     <div class="well-block">
                         <div class="form-group log-status">
                             <p>Job Title</p>
+                            <input type="hidden" name="jobid" class="form-control" value="{{job.id}}">
                             <input type="text" name="title" class="form-control" placeholder="Please input job title" id="JobTitle" value="{{job.title}}">
                         </div>
                         <div class="form-group log-status">
@@ -22,7 +23,7 @@
                         </div>
                         <div class="form-group log-status">
                             <p>Description</p>
-                            <textarea name="description" class="form-control" id="Description" style="height:200px;" value="{{job.description}}"></textarea>
+                            <textarea name="description" class="form-control" id="Description" style="height:200px;">{{job.description}}</textarea>
                         </div>
                         <div class="form-group log-status">
                             <p>StartTime</p>

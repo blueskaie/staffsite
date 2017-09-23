@@ -7,13 +7,13 @@
     {% include 'layouts/header.html' %}
     <div class="space-medium bg-default">
         <div class="container">
-            <form method="POST" action="/prof/new">
+            <form method="POST" action="/prof/new" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="well-block">
                         <div class="form-group log-status">
-                            <p>Photo</p>
+                            <p>Photo</p><img src="{{profile.path}}" width="30%" height="30%"/>
                             <input type="file" name="photo" class="form-control" placeholder="mail@example.com" id="Photo">
                         </div>
                         <div class="form-group log-status">

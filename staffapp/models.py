@@ -36,6 +36,7 @@ class Profile(models.Model):
     role = models.CharField(max_length=100)
     location = models.CharField(max_length=200)
     contact = models.CharField(max_length=100)
+    path = models.FileField(upload_to="photos/", default='/media/none.jpg')
     created_date = models.DateTimeField(
             default=timezone.now)
     published_date = models.DateTimeField(
