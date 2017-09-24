@@ -95,13 +95,16 @@
     </div>
     <script>
     function processfn(mode, requestid){
-        alert("Request"+requestid+"mode"+mode);
+        $("#mybody").css("display","none");
+        $("#waiting").css("display","block");
         $.post('job/reqprocess', 
         {'request_id': requestid,
         'mode': mode,
         'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
         function(data){
             // alert(data.result);
+            $("#mybody").css("display","block");
+            $("#waiting").css("display","none");
             if (data.result == false) {
                 alert('Failure: Your Action is failed');
             } else {
