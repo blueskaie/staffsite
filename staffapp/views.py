@@ -3,11 +3,11 @@ from django.utils import timezone
 from .models import Job, Profile, Requestjob
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.db.models import Q
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 import smtplib
 
 from django.conf import settings
@@ -138,6 +138,7 @@ def requestJobProcess(request):
         request_id = int(request.POST['request_id'])
         mode = request.POST['mode']
         requestjob = Requestjob.objects.filter(id=request_id)[0]
+        to_email = requestjob.user.email
         if mode == 'true':
             requestjob.status = 'AC'
         else:
@@ -146,14 +147,23 @@ def requestJobProcess(request):
         # server = smtplib.SMTP_SSL('smtp.googlemail.com', 465)
         # server.login(gmail_user, 'victory1983')
         # server.sendmail(gmail_user, gmail_user, 'thanks')
-        # send_mail(
-        #     'Subject here',
-        #     'Here is the message.',
-        #     'sabrinallbani83@gmail.com',
-        #     ['sabrinallbani83@gmail.com']
-        # )
+        
+        content = 'Your Request ' + str(requestjob.id) + ' is processed!'
+
+        to_email = requestjob.user.email
+        try:
+            send_mail(
+                'Wild Fork Team',
+                content,
+                'sabrinallbani83@gmail.com',
+                [to_email],
+                fail_silently=False,
+            )
+        except:
+            return JsonResponse({'result': 'false'})
+
         requestjob.save()
-        return JsonResponse({'result': requestjob.id})        
+        return JsonResponse({'result': requestjob.id})      
     else:
         will_requests = Requestjob.objects.filter(status='WT')
         did_requests = Requestjob.objects.filter(~Q(status='WT'))

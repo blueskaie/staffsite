@@ -5,6 +5,11 @@
 
 {% block content %}
     {% include 'layouts/header.html' %}
+    <!-- <script language="Javascript" src="{% static 'plugins/textarea/htmlbox.colors.js' %}" type="text/javascript"></script>
+	<script language="Javascript" src="{% static 'plugins/textarea/htmlbox.styles.js' %}" type="text/javascript"></script>
+	<script language="Javascript" src="{% static 'plugins/textarea/htmlbox.syntax.js' %}" type="text/javascript"></script>
+	<script language="Javascript" src="{% static 'plugins/textarea/xhtml.js' %}" type="text/javascript"></script>
+	<script language="Javascript" src="{% static 'plugins/textarea/htmlbox.min.js' %}" type="text/javascript"></script> -->
     <div class="space-medium bg-default">
         <div class="container">
             <form method="POST" action="/job/new">
@@ -23,7 +28,7 @@
                         </div>
                         <div class="form-group log-status">
                             <p>Description</p>
-                            <textarea name="description" class="form-control" id="Description" style="height:200px;">{{job.description}}</textarea>
+                            <textarea name="description" class="form-control" id="ha" style="height:200px;">{{job.description}}</textarea>
                         </div>
                         <div class="form-group log-status">
                             <p>StartTime</p>
@@ -42,5 +47,39 @@
             </form>
         </div>
     </div>
-    {% include 'layouts/footer.html' %}    
+    {% include 'layouts/footer.html' %}  
+    <!-- <script language="Javascript" type="text/javascript">
+        $("#ha").css("height","100%").css("width","100%").htmlbox({
+            toolbars:[
+                [
+                // Cut, Copy, Paste
+                "separator","cut","copy","paste",
+                // Undo, Redo
+                "separator","undo","redo",
+                // Bold, Italic, Underline, Strikethrough, Sup, Sub
+                "separator","bold","italic","underline","strike","sup","sub",
+                // Left, Right, Center, Justify
+                "separator","justify","left","center","right",
+                // Ordered List, Unordered List, Indent, Outdent
+                "separator","ol","ul","indent","outdent",
+                // Hyperlink, Remove Hyperlink, Image
+                "separator","link","unlink","image"
+                
+                ],
+                [// Show code
+                "separator","code",
+                // Formats, Font size, Font family, Font color, Font, Background
+                "separator","formats","fontsize","fontfamily",
+                "separator","fontcolor","highlight",
+                ],
+                [
+                //Strip tags
+                "separator","removeformat","striptags","hr","paragraph",
+                // Styles, Source code syntax buttons
+                "separator","quote","styles","syntax"
+                ]
+            ],
+            skin:"blue"
+        });
+    </script>  -->
 {% endblock %}
