@@ -44,7 +44,7 @@
                     <th> Job Title </th>
                     <th> Job Content </th>
                     <th> Job Time/hour </th>
-                    <th> Actions </th>
+                    <th width="12%"> Actions </th>
                 </thead>            
                 <tbody>
                     {% for job in jobs %}
@@ -53,7 +53,7 @@
                         <td>{{job.title}}</td>
                         <td>{{job.description}}</td>
                         <td>{{job.start_time}}-{{job.end_time}}</td>
-                        <td><button class="button-success" onclick="editfn({{job.id}})">Edit</button><button class="button-error" onclick="deletefn({{job.id}})">Delete</button></td>
+                        <td><button class="button-success" onclick="editfn({{job.id}})" style="width:50%">Edit</button><button class="button-error" onclick="deletefn({{job.id}})" style="width:50%">Delete</button></td>
                     </tr>
                     {% endfor %}
                 </tbody>
