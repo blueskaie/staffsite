@@ -20,7 +20,11 @@
                             <p><i class="fa fa-clock-o" aria-hidden="true"></i>{{job.start_time}}-{{job.end_time}}<p></p>
                             <p><i class="fa fa-map-marker" aria-hidden="true"></i>{{job.location}}<p>
                             {% if not user.is_superuser %}
-                                <button onclick="jobrequestfn({{job.id}})" style="background-color: rgb(138, 126,126);color: white; border-radius: 4px; border: none">ACCEPT</button>
+                                {% if not job.id in requestjobs %}
+                                    <button id="acceptbtn" onclick="jobrequestfn({{job.id}})" style="background-color: rgb(138, 126,126);color: white; border-radius: 4px; border: none">ACCEPT</button>
+                                {% else %}
+                                    <button id="acceptbtn" onclick="jobrequestedfn({{job.id}})" style="background-color: #C48EF7; color: white; border-radius: 4px; border: none">ACCEPTED</button>
+                                {% endif %}
                             {% endif %}
                         </div>
                     </div>
@@ -37,10 +41,19 @@
         'csrfmiddlewaretoken': '{{ csrf_token }}'}, 
         function(data){
             // alert(data.result);
-            if (data.result == false) alert('Failure: Your request is failed');
-            else alert('Success: Your  request is send to manager successfully');
+            if (data.result == false) 
+                alert('Failure: Your request is failed');
+            else {
+                alert('Success: Your  request is send to manager successfully');
+                window.location="/job/list";
+            }
+                
+            
         })
     };
+    function jobrequestedfn(jobid){
+        alert("You already sent the request of job "+jobid);
+    }
     // $(document).ready(function(){
     //     // $("#jobacceptbtn").click(function(){
     //     //     alert("The paragraph was clicked.");

@@ -15,8 +15,9 @@ from django.core.files.storage import FileSystemStorage
 # Create your views here.
 @login_required
 def home(request):
-    jobs = Job.objects.filter().order_by('created_date')
-    return render(request, 'joblist.html', {'jobs': jobs})
+    # jobs = Job.objects.filter().order_by('created_date')
+    # return render(request, 'joblist.html', {'jobs': jobs})
+    return HttpResponseRedirect('/job/list')
 
 @login_required
 def about(request):
@@ -59,7 +60,11 @@ def profileEdit(request):
 @login_required
 def joblistPage(request):
     jobs = Job.objects.filter().order_by('created_date')
-    return render(request, 'joblist.html', {'jobs': jobs})
+    reqjobs = Requestjob.objects.filter(user=request.user)
+    requestjobs = []
+    for job in reqjobs:
+        requestjobs.append(job.job.id)
+    return render(request, 'joblist.html', {'jobs': jobs, 'requestjobs': requestjobs})
 
 @login_required
 def jobpostPage(request):
@@ -125,7 +130,10 @@ def requestJob(request):
         job = Job.objects.filter(id=jobid)
         if (not job):
             return JsonResponse({'result': false})
-        newReqjob = Requestjob(user=request.user, job=job[0])
+        profile = Profile.objects.filter(user = request.user)
+        if (not profile):
+            return JsonResponse({'result': false})
+        newReqjob = Requestjob(user=request.user, job=job[0], profile=profile[0])
         newReqjob.save()
         return JsonResponse({'result': newReqjob.id})
     else:
@@ -139,17 +147,17 @@ def requestJobProcess(request):
         mode = request.POST['mode']
         requestjob = Requestjob.objects.filter(id=request_id)[0]
         to_email = requestjob.user.email
+        content = 'Your Request ' + str(requestjob.id)
         if mode == 'true':
             requestjob.status = 'AC'
+            content = content + ' is accepted!'
         else:
             requestjob.status = 'DE'
+            content = content + ' is declined!'
         # gmail_user = 'sabrinallbani83@gmail.com'
         # server = smtplib.SMTP_SSL('smtp.googlemail.com', 465)
         # server.login(gmail_user, 'victory1983')
         # server.sendmail(gmail_user, gmail_user, 'thanks')
-        
-        content = 'Your Request ' + str(requestjob.id) + ' is processed!'
-
         to_email = requestjob.user.email
         try:
             send_mail(

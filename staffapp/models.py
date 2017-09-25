@@ -57,6 +57,7 @@ REQUEST_STATUS_CHOICES= (
 )
 class Requestjob(models.Model):
     user = models.ForeignKey('auth.User')
+    profile = models.ForeignKey('Profile')
     job = models.ForeignKey('Job')
     status = models.CharField(max_length=9, choices=REQUEST_STATUS_CHOICES, default="WT")
     processed = models.BooleanField(default =0)
