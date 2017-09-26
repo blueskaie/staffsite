@@ -130,9 +130,11 @@ def requestJob(request):
         job = Job.objects.filter(id=jobid)
         if (not job):
             return JsonResponse({'result': false})
+        
         profile = Profile.objects.filter(user = request.user)
         if (not profile):
             return JsonResponse({'result': false})
+
         newReqjob = Requestjob(user=request.user, job=job[0], profile=profile[0])
         newReqjob.save()
         return JsonResponse({'result': newReqjob.id})
@@ -148,9 +150,13 @@ def requestJobProcess(request):
         requestjob = Requestjob.objects.filter(id=request_id)[0]
         to_email = requestjob.user.email
         content = 'Your Request ' + str(requestjob.id)
+        job = requestjob.job
+        profile = requestjob.profile
         if mode == 'true':
             requestjob.status = 'AC'
             content = content + ' is accepted!'
+            job.staff_members.add(profile)
+            job.save()
         else:
             requestjob.status = 'DE'
             content = content + ' is declined!'
@@ -174,8 +180,9 @@ def requestJobProcess(request):
         return JsonResponse({'result': requestjob.id})      
     else:
         will_requests = Requestjob.objects.filter(status='WT')
-        did_requests = Requestjob.objects.filter(~Q(status='WT'))
-        return render(request, 'requestprocess.html', {'will_requests': will_requests, 'did_requests': did_requests})
+        #did_requests = Requestjob.objects.filter(~Q(status='WT'))
+        jobs = Job.objects.all()
+        return render(request, 'requestprocess.html', {'will_requests': will_requests, 'jobs': jobs})
 
 
 def adminJobList(request):

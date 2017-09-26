@@ -15,6 +15,7 @@ class Job(models.Model):
     companyName = models.CharField(max_length=100)
     website = models.CharField(max_length=100)
     tagline = models.CharField(max_length=200)
+    staff_members = models.ManyToManyField('Profile', default=[])
     start_time = models.TimeField(default=timezone.now)
     end_time = models.TimeField(default=timezone.now)
    

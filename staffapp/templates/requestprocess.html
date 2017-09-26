@@ -158,46 +158,47 @@
             </table>
         </div>
     </div>
-    <div class="space-small bg-default">
+    <div class="space-small bg-default print">
         <div class="container">
             <h1 style="float: left">Staff working on jobs</h1>
             <!-- <button style="float: right" onclick="window.print()">Print</button> -->
             <button class="print-button" onclick="window.print()"><span class="print-icon"></span></button>
-            <table class="print">
+            <table>
                 <thead>
                     <th width="20%"> Date of Event </th>
-                    <th width="6%"> Photo </th>
-                    <th> Staff Members </th>
                     <th width="15%"> Job Title </th>
-                    <th width="25%"> Job Content </th>                  
-                    <th> Status </th>
+                    <th width="25%"> Job Content </th>
+                    <th> Staff Members </th>                  
+                    <th> Print </th>
                 </thead>            
                 <tbody>
-                    {% for request in did_requests %}
-                    <tr>
-                        <td>{{request.created_date}}</td>
-                        <td><img src="{{request.profile.path}}" width="60px" height="60px"/></td>
-                        <td>{{request.user.username}}</td>
-                        <td>{{request.job.title}}</td>
-                        <td>{{request.job.description}}</td>
-                        
-                        <td>
-                            {% if request.status == 'AC' %}
-                            <p class="button-secondary">Accept</p>
-                            {% elif request.status == 'DE' %}
-                            <p class="button-error">Decline</p>
-                            {% else %}
-                            <p class="button-warning">Waiting</p>
-                            {% endif %}
-                        </td>
-
-                    </tr>
+                    {% for job in jobs %}                       
+                        <tr>
+                            <td>{{job.created_date}}</td>
+                            <td>{{job.title}}</td>
+                            <td>{{job.description}}</td>
+                            <td>{{job.staff_members.count}}</td>
+                            <td>
+                                <button class="button-secondary" style="width: 100%" onclick="printfn(job.staff_members)">Print</button>
+                            </td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+    <!-- <div class="print space-small bg-default">
+        <div class="container">
+            welcome
+        </div>
+    </div> -->
     <script>
+    function printfn(members){
+        alert(members.count);
+        var result;
+        $(".print").html(members.count);
+        window.print();
+    };
     function processfn(mode, requestid){
         $("#mybody").css("display","none");
         $("#waiting").css("display","block");

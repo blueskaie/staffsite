@@ -2,10 +2,12 @@
 <div class="header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                 <a href="index.html"><img src="{% static 'img/blacklogo.jpg' %}" style="width: 100px; height: 100px;" alt="Hair Salon Website Templates Free Download"></a>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                 {% if user.is_superuser %}
-                <span style="font-size:48px; font-weight: bold; font-style: italic">ADMIN<span>
+                <p style="font-size:48px; font-weight: bold; font-style: italic; margin-top: 30px">ADMIN<p>
                 {% endif %}
             </div>
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
