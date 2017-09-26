@@ -142,6 +142,14 @@ def requestJob(request):
         requestjobs = Requestjob.objects.filter(user=request.user)
         return render(request, 'requestjoblist.html', {'requestjobs': requestjobs})
 
+
+@login_required
+def staffmembers(request):
+    if request.method == 'GET':
+        job_id = int(request.GET['jobid'])
+        job = Job.objects.filter(id=job_id)[0]
+        return render(request, 'jobstaff.html', {'job': job})
+
 @login_required
 def requestJobProcess(request):
     if request.method == 'POST':

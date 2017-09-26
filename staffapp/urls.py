@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'job/request', views.requestJob, name='requestjob'),
     url(r'job/reqprocess', views.requestJobProcess, name='requestjobprocess'),
     url(r'job/adminlist', views.adminJobList, name='amdinJobList'),
+    url(r'job/staffmembers', views.staffmembers, name="staffmembers"),
 
     url(r'about', views.about, name='about')
 ]

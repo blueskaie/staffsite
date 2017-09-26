@@ -123,12 +123,12 @@
     }
 
     </style>
-    <style type="text/css" media="print">
+    <!-- <style type="text/css" media="print">
         body {visibility:hidden;}
         #pre{display:none;}
         .header{display: none;}
         .print {visibility:visible; position:relative; top:30px;}
-    </style>
+    </style> -->
     <div id="pre" class="space-small bg-default">
         <div class="container">
             <h1>Staff requesting jobs</h1>
@@ -158,11 +158,11 @@
             </table>
         </div>
     </div>
-    <div class="space-small bg-default print">
+    <div class="space-small bg-default">
         <div class="container">
             <h1 style="float: left">Staff working on jobs</h1>
             <!-- <button style="float: right" onclick="window.print()">Print</button> -->
-            <button class="print-button" onclick="window.print()"><span class="print-icon"></span></button>
+            <!-- <button class="print-button" onclick="window.print()"><span class="print-icon"></span></button> -->
             <table>
                 <thead>
                     <th width="20%"> Date of Event </th>
@@ -179,7 +179,7 @@
                             <td>{{job.description}}</td>
                             <td>{{job.staff_members.count}}</td>
                             <td>
-                                <button class="button-secondary" style="width: 100%" onclick="printfn(job.staff_members)">Print</button>
+                                <a href= "/job/staffmembers?jobid={{job.id}}" class="button-secondary" style="width: 100%">Detail</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -187,16 +187,16 @@
             </table>
         </div>
     </div>
-    <!-- <div class="print space-small bg-default">
+    <div class="print space-small bg-default">
         <div class="container">
-            welcome
+            <!-- welcome -->
         </div>
-    </div> -->
+    </div>
     <script>
     function printfn(members){
-        alert(members.count);
-        var result;
-        $(".print").html(members.count);
+        alert("a");
+        var result = "<div class='container'>welcome</div>";
+        $(".print").html(result);
         window.print();
     };
     function processfn(mode, requestid){
